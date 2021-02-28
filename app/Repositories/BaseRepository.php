@@ -10,7 +10,7 @@ interface BaseRepository
 
     public function trashOnly();
 
-    public function find($id);
+    public function find($id, array $with = array());
 
     public function findTrash($id);
 

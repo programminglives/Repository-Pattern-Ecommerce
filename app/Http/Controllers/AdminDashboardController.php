@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admin;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use App\Models\Product;
+use App\Models\User;
+use Illuminate\Contracts\View\View;
 
 class AdminDashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return View
      */
     public function index()
     {

@@ -17,12 +17,12 @@ abstract class EloquentRepository
 		return $this->model->onlyTrashed()->get();
 	}
 
-	public function find($id)
+	public function find($id, array $with = array())
 	{
-		return $this->model->findOrFail($id);
+		return $this->model->with($with)->findOrFail($id);
 	}
 
-	public function findTrash($id)
+    public function findTrash($id)
 	{
 		return $this->model->onlyTrashed()->findOrFail($id);
 	}

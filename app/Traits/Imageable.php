@@ -34,4 +34,19 @@ trait Imageable{
     {
         return $this->morphOne(\App\Models\Image::class, 'imageable')->orderBy('order', 'asc');
     }
+
+    /**
+     * Save Image
+     */
+    public function saveImage($image){
+
+
+    }
+
+    /**
+     * Delete Image
+     */
+    public function deleteImage($image = Null){
+
+    }
 }

@@ -77,7 +77,8 @@
                     </a>
                     <ul class="sub-menu children dropdown-menu">
                         <li><i class="fa fa-plus"></i><a href="{{ route('admin.products.create') }}">Add New</a></li>
-                        <li><i class="fa fa-bars"></i><a href="{{ route('admin.products.index') }}">View All</a></li>
+                        <li><i class="fa fa-bars"></i><a href="{{ route('admin.products.index') }}">View Products</a></li>
+                        <li><i class="fa fa-bars"></i><a href="{{ route('admin.products.trashed') }}">View Trash</a></li>
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown">

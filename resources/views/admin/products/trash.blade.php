@@ -19,7 +19,7 @@
                                     <th>Action</th>
                                     </thead>
                                     <tbody>
-                                    @foreach($products as $product)
+                                    @foreach($trashedProducts as $product)
                                         <tr>
                                             <td>
                                                 {{ $product->id }}
@@ -28,13 +28,17 @@
                                                 {{ $product->name }}
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.products.edit',$product->id) }}">Edit</a> |
-                                                <a href="{{ route('admin.products.trash',$product->id) }}">Delete</a>
+                                                <a href="{{ route('admin.products.restore',$product->id) }}">Restore</a> |
+                                                <a href="{{ route('admin.products.destroy',$product->id) }}" id="deleteButton">Permanently Delete</a>
                                             </td>
                                         </tr>
                                     @endforeach
                                     </tbody>
                                 </table>
+                                <form method="post" id="deleteForm">
+                                    @csrf
+                                    @method('delete')
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -42,4 +46,16 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+        jQuery(document).ready(function(){
+            jQuery('a#deleteButton').click(function(e){
+                e.preventDefault();
+                let action = jQuery(this).attr('href');
+                console.log(action);
+                jQuery('#deleteForm').attr('action',action).submit();
+            });
+        })
+    </script>
 @endsection

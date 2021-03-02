@@ -21,9 +21,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth:admin
     Route::get('dashboard',[AdminDashboardController::class,'index'])->name('dashboard');
 
     Route::resource('products', ProductController::class);
+    Route::get('products/{id}/trash', 'App\Http\Controllers\ProductController@trash')->name('products.trash');
+    Route::get('products/{id}/restore', 'App\Http\Controllers\ProductController@restore')->name('products.restore');
+    Route::get('trash/products', 'App\Http\Controllers\ProductController@trashed')->name('products.trashed');
     Route::resource('categories', CategoryController::class);
 
-    Route::post('upload/image','ImageController@store')->name('image.store');
-    Route::post('delete/image','ImageController@destroy')->name('image.destroy');
+//    Route::post('upload/image','ImageController@store')->name('image.store');
+//    Route::post('delete/image','ImageController@destroy')->name('image.destroy');
 });
 //----------------------------End Dashboard Routes---------------------------------------//

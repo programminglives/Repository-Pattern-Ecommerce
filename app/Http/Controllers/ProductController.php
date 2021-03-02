@@ -77,7 +77,7 @@ class ProductController extends Controller
     {
         $this->product->update($request,$id);
 
-        return back()->with(trans('messages.updated', ['model' => $this->model]));
+        return back()->with('success',trans('messages.updated', ['model' => $this->model]));
     }
 
     /**
@@ -92,24 +92,36 @@ class ProductController extends Controller
     }
 
     /**
+     * View all trashed products
+     */
+    public function trashed(){
+        $trashedProducts = $this->product->trashOnly();
+
+        return view('admin.products.trash',compact('trashedProducts'));
+    }
+
+    /**
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function restore($id){
+    public function restore($id)
+    {
         $this->product->restore($id);
 
-        return back()->with('Success', trans('message.restored', ['model' => $this->model]));
+        return back()->with('success', trans('messages.restored', ['model' => $this->model]));
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
         $this->product->destroy($id);
+
+        return back()->with('success', trans('messages.deleted', ['model' => $this->model]));
     }
 
     /**

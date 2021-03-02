@@ -22,8 +22,8 @@ class EloquentProduct extends EloquentRepository implements BaseRepository,Produ
         if($request->input('categories'))
             $product->categories()->sync($request->input('categories'));
 
-        if($request->hasFile('image'))
-            $product->saveImage($request->file('image'));
+        if($request->hasFile('images'))
+            $product->saveImages($request->file('images'), 'product');
     }
 
     public function update(Request $request, $id){

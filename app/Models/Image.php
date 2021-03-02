@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Image extends Model
 {
 
+    protected $fillable = ['name','path','extension','size','order','featured'];
+
     /**
      * Get all of the owning imageable models.
      */

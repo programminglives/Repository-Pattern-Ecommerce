@@ -4,7 +4,7 @@
         <div class="card">
             <div class="card-header"><strong>Product</strong><small> Form</small></div>
             <div class="card-body card-block">
-                <form action="{{ route('admin.products.store') }}" method="post" class="dropzone" id="mydropzone" enctype="multipart/form-data">
+                <form action="{{ route('admin.products.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-md-6">
@@ -70,7 +70,10 @@
                             </div>
                         </div>
                     </div>
-                    <div id="dropzonePreview"></div>
+                    <div class="form-group file-loading">
+                        <label for="description" class=" form-control-label">Image</label>
+                        <input name="images[]" id="input-id" type="file" class="file" data-preview-file-type="text" multiple>
+                    </div>
                     <div class="form-group">
                         <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
                             <i class="fa fa-plus fa-lg"></i>&nbsp;

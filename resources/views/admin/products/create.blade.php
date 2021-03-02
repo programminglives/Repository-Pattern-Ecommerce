@@ -3,8 +3,10 @@
 @section('stylesheet')
     <link rel="stylesheet" href="{{ asset('admin/css/lib/chosen/chosen.min.css') }}">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+    <!-- Bootstrap Fileinput -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/min/dropzone.min.css">
 @endsection
 
 @section('content')
@@ -62,8 +64,17 @@
 
 @section('script')
     <script src="{{ asset('admin/js/lib/chosen/chosen.jquery.min.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/dropzone.js"></script>
+    <!-- Bootstrap Fileinput -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/plugins/piexif.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/plugins/sortable.min.js" type="text/javascript"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/fileinput.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/themes/fas/theme.min.js"></script>
     <script>
+        jQuery("#input-id").fileinput({
+            theme: "fas",
+            overwriteInitial: true,
+        });
         jQuery(document).ready(function() {
             jQuery(".standardSelect").chosen({
                 disable_search_threshold: 10,
@@ -71,45 +82,5 @@
                 width: "100%"
             });
         });
-    </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script type="text/javascript">
-        Dropzone.options.myAwesomeDropzone = { // The camelized version of the ID of the form element
-
-            // The configuration we've talked about above
-            autoProcessQueue: false,
-            uploadMultiple: true,
-            parallelUploads: 100,
-            maxFiles: 100,
-
-            // The setting up of the dropzone
-            init: function() {
-                var myDropzone = this;
-
-                // First change the button to actually tell Dropzone to process the queue.
-                this.element.querySelector("button[type=submit]").addEventListener("click", function(e) {
-                    // Make sure that the form isn't actually being sent.
-                    e.preventDefault();
-                    e.stopPropagation();
-                    myDropzone.processQueue();
-                });
-
-                // Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
-                // of the sending event because uploadMultiple is set to true.
-                this.on("sendingmultiple", function() {
-                    // Gets triggered when the form is actually being sent.
-                    // Hide the success button or the complete form.
-                });
-                this.on("successmultiple", function(files, response) {
-                    // Gets triggered when the files have successfully been sent.
-                    // Redirect user or notify of success.
-                });
-                this.on("errormultiple", function(files, response) {
-                    // Gets triggered when there was an error sending the files.
-                    // Maybe show form again, and notify user of error
-                });
-            }
-
-        }
     </script>
 @endsection

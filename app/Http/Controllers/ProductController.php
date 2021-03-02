@@ -48,7 +48,6 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
         $this->product->store($request);
 
         return redirect(route('admin.products.index'))->with('success', trans('messages.created', ['model' => $this->model]));

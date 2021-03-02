@@ -36,11 +36,25 @@ trait Imageable{
     }
 
     /**
-     * Save Image
+     * Save array of Images
+     * @param array $images
+     * @param null $path
+     * @return mixed
      */
-    public function saveImage($image){
+    public function saveImages(array $images, $path = null){
+        foreach($images as $image) {
+            $this->saveImage($image, $path);
+        }
+    }
 
-
+    public function saveImage($image, $path){
+        $path = $image->store('images/'.$path,'public');
+        return $this->image()->create([
+            'path' => $path,
+            'name' => $image->getClientOriginalName(),
+            'extension' => $image->getClientOriginalExtension(),
+            'size' => $image->getSize(),
+        ]);
     }
 
     /**

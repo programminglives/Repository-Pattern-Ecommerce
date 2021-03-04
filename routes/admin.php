@@ -11,7 +11,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'guest:admin'],function() {
     Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('admin.login');
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 });
-Route::post('admin/logout',[AuthenticatedSessionController::class,'destroy'])
+Route::get('admin/logout',[AuthenticatedSessionController::class,'destroy'])
     ->name('admin.logout')->middleware('auth:admin');
 //------------------------------End Authentication Routes-----------------------------------------//
 

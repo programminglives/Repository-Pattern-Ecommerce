@@ -23,7 +23,7 @@ class EloquentProduct extends EloquentRepository implements BaseRepository,Produ
             $product->categories()->sync($request->input('categories'));
 
         if($request->hasFile('images'))
-            $product->saveImages($request->file('images'), 'product');
+            $product->saveImages($request->file('images'), 'product/'.$product->id);
     }
 
     public function update(Request $request, $id){
@@ -31,11 +31,8 @@ class EloquentProduct extends EloquentRepository implements BaseRepository,Produ
 
         $product->categories()->sync($request->input('categories'));
 
-        if($request->hasFile('image') || ($request->input('delete_image') == 1))
-            $product->deleteImage();
-
-        if($request->hasFile('image'))
-            $product->saveImage($request->file('image'));
+        if($request->hasFile('images'))
+            $product->saveImages($request->file('images'), 'product/'.$product->id);
 
         return $product;
     }

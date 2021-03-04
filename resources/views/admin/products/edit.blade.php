@@ -3,6 +3,9 @@
 @section('stylesheet')
     <link rel="stylesheet" href="{{ asset('admin/css/lib/chosen/chosen.min.css') }}">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+    <!-- Bootstrap Fileinput -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" crossorigin="anonymous">
 @endsection
 
 @section('content')
@@ -31,6 +34,23 @@
             </div>
         </div>
     </div>
+    <div class="breadcrumbs">
+        <div class="breadcrumbs-inner">
+            <div class="row m-0">
+                <div class="col-sm-12">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="content">
         <div class="animated fadeIn">
 
@@ -38,14 +58,30 @@
 
         </div>
     </div>
-
 @endsection
 
 
 @section('script')
     <script src="{{ asset('admin/js/lib/chosen/chosen.jquery.min.js') }}"></script>
+    <!-- Bootstrap Fileinput -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/plugins/piexif.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/plugins/sortable.min.js" type="text/javascript"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/fileinput.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/themes/fas/theme.min.js"></script>
 
     <script>
+        let url = 'https://www.nepalhighlandtreks.com/uploads/gallery/potala-palace1.jpg';
+        jQuery("#input-id").fileinput({
+            initialPreview: @json($preview['preview']),
+            initialPreviewConfig: @json($preview['previewConfig']),
+            initialPreviewAsData: true,
+            theme: "fas",
+            overwriteInitial: false,
+            deleteUrl: "/api/admin/image/delete",
+            ajaxDeleteSettings: { headers: {"Authorization" : "Bearer "+@json(Cookie::get('access_token'))} },
+            mergeAjaxDeleteCallbacks : 'before',
+        });
         jQuery(document).ready(function() {
             jQuery(".standardSelect").chosen({
                 disable_search_threshold: 10,

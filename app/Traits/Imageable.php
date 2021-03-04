@@ -51,7 +51,7 @@ trait Imageable{
     }
 
     public function saveImage($image, $path){
-        $path = $image->store('images/'.$path,'public');
+        $path = $image->store($path,'public');
         return $this->image()->create([
             'path' => $path,
             'name' => $image->getClientOriginalName(),

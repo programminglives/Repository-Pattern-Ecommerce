@@ -4,7 +4,10 @@
         <div class="card">
             <div class="card-header"><strong>Product</strong><small> Form</small></div>
             <div class="card-body card-block">
-                <form action="{{ route('admin.products.store') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ isset($product)?route('admin.products.update',$product->id):route('admin.products.store') }}" method="post" enctype="multipart/form-data">
+                    @if(isset($product))
+                        @method('patch')
+                    @endif
                     @csrf
                     <div class="row">
                         <div class="col-md-6">
@@ -72,12 +75,12 @@
                     </div>
                     <div class="form-group file-loading">
                         <label for="description" class=" form-control-label">Image</label>
-                        <input name="images[]" id="input-id" type="file" class="file" data-preview-file-type="text" multiple>
+                        <input name="images[]" id="input-id" type="file" class="file file-loading" data-preview-file-type="text" multiple>
                     </div>
                     <div class="form-group">
                         <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
                             <i class="fa fa-plus fa-lg"></i>&nbsp;
-                            <span id="payment-button-amount">Add Product Now</span>
+                            <span id="payment-button-amount">{{isset($product) ? 'Update ' :'Add '}}Product Now</span>
                         </button>
                     </div>
                 </form>

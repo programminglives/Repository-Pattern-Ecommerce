@@ -6,7 +6,9 @@ use App\Http\Requests\Product\CreateProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
 use App\Models\Product;
 use App\Repositories\Product\ProductRepository;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -43,10 +45,10 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param CreateProductRequest $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(CreateProductRequest $request)
     {
         $this->product->store($request);
 
@@ -57,13 +59,14 @@ class ProductController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return string
      */
     public function edit($id)
     {
-        $product = $this->product->find($id,['categories']);
+        $product = $this->product->find($id,['categories','images']);
+        $preview = $product->getPreviewData($product->images);
 
-        return view('admin.products.edit',compact('product'));
+        return view('admin.products.edit',compact('product','preview'));
     }
 
     /**
@@ -71,13 +74,13 @@ class ProductController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function update(UpdateProductRequest $request, $id)
     {
         $this->product->update($request,$id);
 
-        return back()->with('success',trans('messages.updated', ['model' => $this->model]));
+        return redirect(route('admin.products.index'))->with('success',trans('messages.updated', ['model' => $this->model]));
     }
 
     /**
@@ -102,7 +105,7 @@ class ProductController extends Controller
 
     /**
      * @param $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function restore($id)
     {
@@ -115,7 +118,7 @@ class ProductController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function destroy($id)
     {
@@ -126,7 +129,7 @@ class ProductController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function massTrash(Request $request){
         $this->product->massTrash($request->ids);
@@ -135,7 +138,7 @@ class ProductController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function massDestroy(Request $request){
         $this->product->massDestroy($request->ids);
@@ -145,7 +148,7 @@ class ProductController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function emptyTrash(){
         $this->product->emptyTrash();

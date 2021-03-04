@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Auth\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginAdminRequest;
-use App\Http\Requests\Auth\LoginRequest;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -33,7 +32,8 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('admin.dashboard'));
+        return redirect()->intended(route('admin.dashboard'))
+            ->withCookie('access_token',auth('admin')->user()->createToken('website')->plainTextToken);
     }
 
     /**
@@ -44,12 +44,13 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
+        Auth::guard('admin')->user()->tokens()->delete();;
         Auth::guard('admin')->logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/')->withCookie(Cookie::forget('access_token'));
     }
 }

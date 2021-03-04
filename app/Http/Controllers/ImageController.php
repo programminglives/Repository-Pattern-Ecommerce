@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
 {
@@ -41,11 +42,17 @@ class ImageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Image  $image
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy()
-    {
-        return 'hi';
+    public function destroy(Request $request){
+        try{
+            $image = Image::findOrFail($request->key);
+            Storage::disk('public')->delete($image->path);
+            $image->delete();
+        }catch (\Exception $exception){
+            return response(['There was some problem. Contact System Administrator.'],500);
+        }
+        return response(['Image was successfully deleted'],200);
     }
 }

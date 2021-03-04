@@ -73,7 +73,6 @@
     <script>
         jQuery("#input-id").fileinput({
             theme: "fas",
-            overwriteInitial: true,
         });
         jQuery(document).ready(function() {
             jQuery(".standardSelect").chosen({

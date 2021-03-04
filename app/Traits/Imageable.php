@@ -2,6 +2,9 @@
 
 namespace App\Traits;
 
+use App\Models\Image;
+use Illuminate\Support\Facades\Storage;
+
 trait Imageable{
 
 
@@ -59,8 +62,30 @@ trait Imageable{
 
     /**
      * Delete Image
+     * @param Image $image
+     * @param $path
      */
-    public function deleteImage($image = Null){
+    public function deleteImage(Image $image, $path){
 
+    }
+
+    /**
+     * @param $images
+     * @return array
+     */
+    public function getPreviewData($images){
+        $preview = [];
+        $previewConfig = [];
+        foreach ($images as $image){
+            array_push($preview,Storage::disk('public')->url($image->path));
+            array_push($previewConfig,[
+                'caption' => $image->name,
+                'key' => $image->id
+            ]);
+        }
+        return [
+            'preview' => $preview,
+            'previewConfig' => $previewConfig
+        ];
     }
 }

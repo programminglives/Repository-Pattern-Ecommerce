@@ -48,4 +48,15 @@ class EloquentProduct extends EloquentRepository implements BaseRepository,Produ
 
         return parent::destroy($id);// finally delete product
     }
+
+    public function massDestroy($ids){
+        foreach ($ids as $id)
+            $this->destroy($id);
+    }
+
+    public function emptyTrash(){
+        $ids = parent::trashOnly()->pluck('id');
+
+        $this->massDestroy($ids);
+    }
 }

@@ -114,6 +114,13 @@ class ProductController extends Controller
         return back()->with('success', trans('messages.restored', ['model' => $this->model]));
     }
 
+    public function massRestore(Request $request)
+    {
+        $this->product->massRestore(explode(',',$request->ids));
+
+        return back()->with('success', trans('messages.restored', ['model' => $this->model]));
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -131,26 +138,30 @@ class ProductController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function massTrash(Request $request){
-        $this->product->massTrash($request->ids);
-        return back()->with('Success', trans('messages.trashed', ['model' => $this->model]));
+    public function massTrash(Request $request)
+    {
+        $this->product->massTrash(explode(',',$request->ids));
+
+        return back()->with('success', trans('messages.trashed', ['model' => $this->model]));
     }
 
     /**
      * @param Request $request
      * @return RedirectResponse
      */
-    public function massDestroy(Request $request){
-        $this->product->massDestroy($request->ids);
+    public function massDestroy(Request $request)
+    {
+        $this->product->massDestroy(explode(',',$request->ids));
 
-        return back()->with('Success', trans('messages.deleted', ['model' => $this->model]));
+        return back()->with('success', trans('messages.deleted', ['model' => $this->model]));
     }
 
     /**
      * @param Request $request
      * @return RedirectResponse
      */
-    public function emptyTrash(){
+    public function emptyTrash()
+    {
         $this->product->emptyTrash();
 
         return back()->with('success', trans('messages.deleted', ['model' => $this->model]));

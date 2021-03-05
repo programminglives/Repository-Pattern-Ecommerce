@@ -71,6 +71,7 @@
     <script>
         jQuery(document).ready(function() {
             jQuery('#product-table').DataTable({
+                "scrollY": 500,
                 dom: 'Bfrtip',
                 buttons: [{
                     text: 'Mass Trash',
@@ -88,7 +89,7 @@
                             massTrash(ids);
                         }
                     }
-                }, 'excel', 'pdf', 'print']
+                }, 'excel', 'pdf', 'print','pageLength']
             });
             jQuery('#select-all:checkbox').click(function(){
                 if(jQuery(this).is(':checked'))

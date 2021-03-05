@@ -32,12 +32,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="breadcrumbs">
-        <div class="breadcrumbs-inner">
-            <div class="row m-0">
                 <div class="col-sm-12">
                     @if ($errors->any())
                         <div class="alert alert-danger">

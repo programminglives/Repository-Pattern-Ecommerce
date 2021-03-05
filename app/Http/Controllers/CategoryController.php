@@ -50,7 +50,7 @@ class CategoryController extends Controller
     {
         $this->category->store($request);
 
-        return back()->with('success', trans('messages.created', ['model' => $this->model]));
+        return redirect(route('admin.categories.index'))->with('success', trans('messages.created', ['model' => $this->model]));
     }
 
     /**
@@ -77,26 +77,30 @@ class CategoryController extends Controller
     {
         $this->category->update($request, $id);
 
-        return back()->with(trans('messages.updated', ['model' => $this->model]));
+        return redirect(route('admin.categories.index'))->with('success',trans('messages.updated', ['model' => $this->model]));
     }
 
-    public function trash()
-    {
-
-    }
-
-    public function restore()
-    {
-
-    }
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-        //
+        $this->category->destroy($id);
+
+        return redirect(route('admin.categories.index'))->with('success',trans('messages.deleted', ['model' => $this->model]));
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function massDestroy(Request $request)
+    {
+        $this->category->massDestroy(explode(',',$request->ids));
+
+        return back()->with('success', trans('messages.deleted', ['model' => $this->model]));
     }
 }

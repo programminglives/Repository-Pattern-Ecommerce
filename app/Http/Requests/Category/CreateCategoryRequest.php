@@ -13,7 +13,7 @@ class CreateCategoryRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,11 +25,10 @@ class CreateCategoryRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'slug' => 'required|unique:categories',
             'description' => 'required',
             'active' => 'required',
-            'meta_title' => 'required',
-            'meta_description' => 'required',
+//            'meta_title' => 'required',
+//            'meta_description' => 'required',
         ];
     }
 }

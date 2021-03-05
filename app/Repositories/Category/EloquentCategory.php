@@ -14,4 +14,16 @@ class EloquentCategory extends EloquentRepository implements BaseRepository, Cat
         $this->model = $category;
     }
 
+    public function destroy($id)
+    {
+        parent::trash($id);
+        parent::destroy($id);
+    }
+
+    public function massDestroy($ids)
+    {
+        parent::massTrash($ids);
+        parent::massDestroy($ids);
+    }
+
 }

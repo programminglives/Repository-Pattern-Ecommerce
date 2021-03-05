@@ -44,10 +44,6 @@
                                     @endforeach
                                     </tbody>
                                 </table>
-                                <form method="post" id="deleteForm">
-                                    @csrf
-                                    @method('delete')
-                                </form>
                             </div>
                         </div>
                     </div>
@@ -55,6 +51,10 @@
             </div>
         </div>
     </div>
+    <form method="post" id="deleteForm">
+        @csrf
+        @method('delete')
+    </form>
     <form action="{{ route('admin.products.mass.restore') }}" method="post" id="mass-restore-form">
         @csrf
         <input type="hidden" name="ids" id="mass-restore-ids">
@@ -80,6 +80,7 @@
     <script>
         jQuery(document).ready(function(){
             jQuery('#product-table').DataTable({
+                "scrollY": 500,
                 dom: 'Bfrtip',
                 buttons: [{
                     text: 'Mass Restore',
@@ -112,14 +113,13 @@
                             jQuery('#empty-trash-form').submit();
                         }
                     }
-                },'excel', 'pdf', 'print'
-                ]
+                },'excel', 'pdf', 'print','pageLength']
             });
             jQuery('a#deleteButton').click(function(e){
                 e.preventDefault();
                 let action = jQuery(this).attr('href');
-                console.log(action);
-                jQuery('#deleteForm').attr('action',action).submit();
+                if(confirm('Are you sure you want to permanently delete the selected product?'))
+                    jQuery('#deleteForm').attr('action',action).submit();
             });
             jQuery('#select-all:checkbox').click(function(){
                 if(jQuery(this).is(':checked'))

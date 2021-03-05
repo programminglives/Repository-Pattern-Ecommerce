@@ -32,6 +32,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth:admin
 
 
     Route::resource('categories', CategoryController::class);
+    Route::post('categories/mass/destroy', 'App\Http\Controllers\CategoryController@massDestroy')->name('categories.mass.destroy');
 
 });
 //----------------------------End Dashboard Routes---------------------------------------//

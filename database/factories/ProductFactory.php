@@ -22,6 +22,7 @@ class ProductFactory extends Factory
     public function definition()
     {
         $name = $this->faker->name;
+        $date = $this->faker->dateTimeBetween('-90 days', now());
         return [
             'name' => $name,
             'brand' => $this->faker->company,
@@ -30,8 +31,8 @@ class ProductFactory extends Factory
             'slug' => $name.'-slug',
             'price' => $this->faker->numberBetween(1000,10000),
             'active' => $this->faker->boolean,
-            'created_at' => now(),
-            'updated_at' => now(),
+            'created_at' => $date,
+            'updated_at' => $date,
         ];
     }
 }

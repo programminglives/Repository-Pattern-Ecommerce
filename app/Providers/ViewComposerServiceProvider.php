@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Helpers\ListHelper;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
@@ -35,9 +36,11 @@ class ViewComposerServiceProvider extends ServiceProvider
      * Compose Admin Dashboard
      */
     private function composeAdminDashboard(){
+        $newUsers = ListHelper::getModelCountFrom(User::class,30);
+        $newProducts = ListHelper::getModelCountFrom(Product::class,30);
         View::composer(
             'admin.dashboard',
-            function($view){
+            function($view) use ($newUsers,$newProducts){
                 $view->with([
                     'products' => Product::all()->count(),
                     'active' => Product::where('active',1)->count(),
@@ -45,6 +48,10 @@ class ViewComposerServiceProvider extends ServiceProvider
                     'users' => User::all()->count(),
                     'categories' => Category::all()->count(),
                     'orders' => Order::all()->count(),
+                    'newUsers' => $newUsers,
+                    'userIncreasePercentage' => ListHelper::increasePercentage($newUsers,ListHelper::getModelCountUpto(User::class,30)),
+                    'newProducts' => $newProducts,
+                    'productIncreasePercentage' => ListHelper::increasePercentage($newProducts,ListHelper::getModelCountUpto(Product::class,30)),
                 ]);
             }
         );

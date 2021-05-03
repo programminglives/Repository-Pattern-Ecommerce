@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Charts\ProductChart;
+use App\Charts\UserChart;
 use ConsoleTVs\Charts\Registrar as Charts;
 use Illuminate\Support\ServiceProvider;
 
@@ -26,7 +27,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(Charts $charts)
     {
         $charts->register([
-            ProductChart::class
+            ProductChart::class,
+            UserChart::class,
         ]);
     }
 }

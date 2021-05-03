@@ -94,16 +94,14 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="box-title">Products</h4>
+                            <h4 class="box-title chartisan-toggler">Products</h4>
+                            <div class="box-title-seperator"></div>
+                            <h4 class="box-title chartisan-toggler">User</h4>
                         </div>
                         <div class="row">
-                             <div class="col-lg-8" id="chart" style="height: 10cm; width: 100%;">
-                                {{-- <div class="card-body">
-                                    <canvas id="TrafficChart"></canvas>
-                                    <div id="traffic-chart" class="traffic-chart"></div>
-                                </div> --}}
-                            </div>
-                             <div class="col-lg-4">
+                            <div class="col-lg-8 chartisan-chart" id="product-chart"></div>
+                            <div class="col-lg-8 chartisan-chart" id="user-chart"></div>
+                            <div class="col-lg-4">
                                 <div class="card-body">
                                     <div class="progress-box progress-1">
                                         <h4 class="por-title">New Users (Last 30 Days)</h4>
@@ -514,13 +512,18 @@
     <script src="https://unpkg.com/echarts/dist/echarts.min.js"></script>
     <!-- Chartisan -->
     <script src="https://unpkg.com/@chartisan/echarts/dist/chartisan_echarts.js"></script>
-    <!--Local Stuff-->
+    <!--Local & Custom Stuff-->
     <script>
-        const chart = new Chartisan({
-            el: '#chart',
+        const chartProduct = new Chartisan({
+            el: '#product-chart',
             url: "@chart('product_chart')",
         });
+        const chartUser = new Chartisan({
+            el: '#user-chart',
+            url: "@chart('user_chart')",
+        });
     </script>
+    <script src="{{ asset('admin/js/custom/dashboard.js') }}"></script>
     <script>
         jQuery(document).ready(function($) {
             "use strict";

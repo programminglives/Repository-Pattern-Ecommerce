@@ -94,34 +94,32 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="box-title">Traffic </h4>
+                            <h4 class="box-title chartisan-toggler">Products</h4>
+                            <div class="box-title-seperator"></div>
+                            <h4 class="box-title chartisan-toggler">User</h4>
                         </div>
                         <div class="row">
-                            <div class="col-lg-8">
-                                <div class="card-body">
-                                    <!-- <canvas id="TrafficChart"></canvas>   -->
-                                    <div id="traffic-chart" class="traffic-chart"></div>
-                                </div>
-                            </div>
+                            <div class="col-lg-8 chartisan-chart" id="product-chart"></div>
+                            <div class="col-lg-8 chartisan-chart" id="user-chart"></div>
                             <div class="col-lg-4">
                                 <div class="card-body">
                                     <div class="progress-box progress-1">
-                                        <h4 class="por-title">Visits</h4>
-                                        <div class="por-txt">96,930 Users (40%)</div>
+                                        <h4 class="por-title">New Users (Last 30 Days)</h4>
+                                        <div class="por-txt">{{ $newUsers }} Users ({{$userIncreasePercentage}}%)</div>
                                         <div class="progress mb-2" style="height: 5px;">
-                                            <div class="progress-bar bg-flat-color-1" role="progressbar" style="width: 40%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="progress-bar bg-flat-color-1" role="progressbar" style="width: {{$userIncreasePercentage}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                     <div class="progress-box progress-2">
-                                        <h4 class="por-title">Bounce Rate</h4>
-                                        <div class="por-txt">3,220 Users (24%)</div>
+                                        <h4 class="por-title">New Products (Last 30 Days)</h4>
+                                        <div class="por-txt">{{ $newProducts }} Products ({{ $productIncreasePercentage }}%)</div>
                                         <div class="progress mb-2" style="height: 5px;">
-                                            <div class="progress-bar bg-flat-color-2" role="progressbar" style="width: 24%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="progress-bar bg-flat-color-2" role="progressbar" style="width: {{ $productIncreasePercentage }}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                     <div class="progress-box progress-2">
-                                        <h4 class="por-title">Unique Visitors</h4>
-                                        <div class="por-txt">29,658 Users (60%)</div>
+                                        <h4 class="por-title">Orders (Last 30 Days)</h4>
+                                        <div class="por-txt">29,658 Orders (60%)</div>
                                         <div class="progress mb-2" style="height: 5px;">
                                             <div class="progress-bar bg-flat-color-3" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
@@ -509,7 +507,23 @@
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.js"></script>
     <script src="{{ asset('admin/js/init/fullcalendar-init.js') }}"></script>
 
-    <!--Local Stuff-->
+
+    <!-- Charting library -->
+    <script src="https://unpkg.com/echarts/dist/echarts.min.js"></script>
+    <!-- Chartisan -->
+    <script src="https://unpkg.com/@chartisan/echarts/dist/chartisan_echarts.js"></script>
+    <!--Local & Custom Stuff-->
+    <script>
+        const chartProduct = new Chartisan({
+            el: '#product-chart',
+            url: "@chart('product_chart')",
+        });
+        const chartUser = new Chartisan({
+            el: '#user-chart',
+            url: "@chart('user_chart')",
+        });
+    </script>
+    <script src="{{ asset('admin/js/custom/dashboard.js') }}"></script>
     <script>
         jQuery(document).ready(function($) {
             "use strict";

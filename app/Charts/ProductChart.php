@@ -15,18 +15,27 @@ use Illuminate\Http\Request;
 class ProductChart extends BaseChart
 {
     /**
+     * Number of days to be shown in the chart
+     * @var int
+     */
+    private $days = 30;
+
+    /**
      * Handles the HTTP request for the given chart.
      * It must always return an instance of Chartisan
      * and never a string or an array.
      */
     public function handler(Request $request): Chartisan
     {
-        $productCountMonth = ListHelper::getModelCountUpto(Product::class,30);
-        $productCountWeek = ListHelper::getModelCountUpto(Product::class,7);
-        $productCountNow = ListHelper::getModelCountUpto(Product::class);
+        $labels = [];
+        $dataset = [];
+        for ($this->days; $this->days > 0; $this->days--){
+            array_push($labels,$this->days);
+            array_push($dataset,ListHelper::getModelCountOnDay(Product::class,$this->days));
+        }
         return Chartisan::build()
-            ->labels(['30 Days Ago', '7 Days Ago', 'Today'])
-            ->dataset('Product', [$productCountMonth, $productCountWeek, $productCountNow]);
+            ->labels($labels)
+            ->dataset('Product', $dataset);
     }
 
 }

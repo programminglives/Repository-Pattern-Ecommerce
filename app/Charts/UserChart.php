@@ -13,17 +13,26 @@ use Illuminate\Http\Request;
 class UserChart extends BaseChart
 {
     /**
+     * Number of days to be shown in the chart
+     * @var int
+     */
+    private $days = 30;
+
+    /**
      * Handles the HTTP request for the given chart.
      * It must always return an instance of Chartisan
      * and never a string or an array.
      */
     public function handler(Request $request): Chartisan
     {
-        $userCountMonth = ListHelper::getModelCountUpto(User::class,30);
-        $userCountWeek = ListHelper::getModelCountUpto(User::class,7);
-        $userCountNow = ListHelper::getModelCountUpto(User::class);
+        $labels = [];
+        $dataset = [];
+        for ($this->days; $this->days > 0; $this->days--){
+            array_push($labels,$this->days);
+            array_push($dataset,ListHelper::getModelCountOnDay(User::class,$this->days));
+        }
         return Chartisan::build()
-            ->labels(['30 Days Ago', '7 Days Ago', 'Today'])
-            ->dataset('User', [$userCountMonth, $userCountWeek, $userCountNow]);
+            ->labels($labels)
+            ->dataset('User', $dataset);
     }
 }

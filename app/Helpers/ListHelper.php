@@ -27,6 +27,17 @@ class ListHelper{
     }
 
     /**
+     * Get row count of day which is $daysAgo before today
+     * @param $model
+     * @param int $daysAgo
+     * @return mixed
+     */
+    public static function getModelCountOnDay($model, int $daysAgo = 0){
+        return $model::whereDate('created_at', \Carbon\Carbon::now()->subDays($daysAgo)->toDateString())
+            ->get()->count();
+    }
+
+    /**
      * @param int $newNumber
      * @param int $originalNumber
      * @return float|int

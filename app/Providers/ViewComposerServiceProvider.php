@@ -36,11 +36,11 @@ class ViewComposerServiceProvider extends ServiceProvider
      * Compose Admin Dashboard
      */
     private function composeAdminDashboard(){
-        $newUsers = ListHelper::getModelCountFrom(User::class,30);
-        $newProducts = ListHelper::getModelCountFrom(Product::class,30);
         View::composer(
             'admin.dashboard',
-            function($view) use ($newUsers,$newProducts){
+            function($view){
+                $newUsers = ListHelper::getModelCountFrom(User::class,30);
+                $newProducts = ListHelper::getModelCountFrom(Product::class,30);
                 $view->with([
                     'products' => Product::all()->count(),
                     'active' => Product::where('active',1)->count(),
